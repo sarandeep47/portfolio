@@ -3,7 +3,7 @@ const header = document.querySelector('.header');
 const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
-const skillProgressBars = document.querySelectorAll('.skill-progress-bar .progress');
+const skillProgressBars = []; // Legacy — replaced by chip stagger system
 const statNums = document.querySelectorAll('.stat-num');
 const projectModal = document.getElementById('project-modal');
 const modalClose = document.querySelector('.modal-close');
@@ -12,6 +12,27 @@ const toastContainer = document.getElementById('toast-container');
 
 // --- Project Data ---
 const projectsData = {
+    'ai-interviewer': {
+        title: 'AI Interviewer: Mock Screening Suite',
+        badge: 'React + FastAPI + Gemini',
+        role: 'Full-Stack Developer & AI Architect',
+        demoLink: 'https://www.linkedin.com/posts/sarandeep-p-s-345b39261_artificialintelligence-ai-machinelearning-ugcPost-7473755964983115776-56uS/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEBrBaUBF_geEoLK1xjuInaLiF4y2mSY554',
+        desc: 'An advanced, interactive mock screening application designed to simulate high-fidelity technical interviews using LLMs. It features a React frontend and a FastAPI backend, supporting PDF/Image resume uploads, client-side/backend OCR fallbacks, real-time evaluation, database session management, and synchronized voice interaction (Text-to-Speech & Speech-to-Text).',
+        responsibilities: [
+            'Engineered a robust React (Vite/TypeScript) client featuring modular glassmorphic design and synchronized voice engine.',
+            'Designed a FastAPI backend implementing SQLAlchemy ORM with SQLite database mappings supporting cascade message deletion.',
+            'Developed a multi-tier OCR pipeline utilizing native pypdf digital extraction, backend fitz (PyMuPDF) page rendering with pytesseract/PaddleOCR fallbacks, and a client-side Tesseract.js browser runner.',
+            'Built a state-aware interview engine utilizing Gemini SDK (gemini-flash-latest) and background threads for asynchronous metadata extraction.',
+            'Orchestrated a strict 5-Question flow matching indexed introduction, project probing, core role concepts, engineering practices, and structured feedback collection.',
+            'Implemented synchronized Text-to-Speech (speechSynthesis) and Speech-to-Text (SpeechRecognition) timing checks with idle and recording countdown safeguards.'
+        ],
+        impacts: [
+            'Delivered a zero-latency screening simulation enabling real-time candidate evaluations.',
+            'Eliminated complex local system dependencies by integrating browser-based Tesseract.js OCR fallbacks.',
+            'Successfully processed uploaded PDF/Image resumes to extract structured name, email, skills, and experience tags.'
+        ],
+        techStack: ['React', 'TypeScript', 'FastAPI', 'Gemini API', 'SQLAlchemy', 'Tesseract.js', 'Speech Recognition', 'Python']
+    },
     'news-agent': {
         title: 'Daily AI News Agent',
         badge: 'n8n + Groq AI + WhatsApp',
@@ -191,10 +212,191 @@ const animateOnScroll = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.15 });
 
-// Apply to sections & cards
-document.querySelectorAll('section, .skills-category-card, .timeline-item, .project-card, .edu-card, .achievements-card').forEach(el => {
+// Apply to sections & cards (exclude .skill-category-block — handled by stagger observer)
+document.querySelectorAll('section, .timeline-item, .project-card, .edu-card, .achievements-card').forEach(el => {
     el.classList.add('fade-in-section');
     animateOnScroll.observe(el);
+});
+
+// --- Skills Section Data & Dynamic Component Rendering ---
+const skillsData = [
+    {
+        title: 'AI & Automation',
+        desc: 'AI workflows, intelligent automation & API integrations',
+        icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
+        skills: [
+            { name: 'Prompt Engineering', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>` },
+            { name: 'AI-assisted Dev', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>` },
+            { name: 'AI Agents', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>` },
+            { name: 'Workflow Automation', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>` },
+            { name: 'n8n', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>` },
+            { name: 'Activepieces', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>` },
+            { name: 'REST APIs', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>` },
+            { name: 'Webhooks', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9M8 17l4 4 4-4"/></svg>` },
+            { name: 'Google APIs', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>` }
+        ]
+    },
+    {
+        title: 'Web Development',
+        desc: 'Building modern, responsive web applications',
+        icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m9 8 3 3-3 3"/><path d="M15 11h3"/></svg>`,
+        skills: [
+            { name: 'React', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>` },
+            { name: 'JavaScript', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>` },
+            { name: 'HTML5', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 0M4 12l16 0M4 20l16 0"/></svg>` },
+            { name: 'CSS3', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>` },
+            { name: 'Responsive Design', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>` },
+            { name: 'Component UI', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2z"/><path d="M7 7h.01"/></svg>` }
+        ]
+    },
+    {
+        title: 'Backend & Database',
+        desc: 'Backend logic, APIs & database management',
+        icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>`,
+        skills: [
+            { name: 'Python', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>` },
+            { name: 'SQL', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>` },
+            { name: 'MySQL', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg>` },
+            { name: 'Git', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>` },
+            { name: 'API Integration', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>` }
+        ]
+    }
+];
+
+const professionalSkillsData = {
+    title: 'Professional Skills',
+    desc: 'Core cognitive and collaborative soft skills that drive project delivery and execution.',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    pills: [
+        { name: 'Problem Solving', icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>` },
+        { name: 'Analytical Thinking', icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>` },
+        { name: 'Communication', icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>` },
+        { name: 'Teamwork', icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>` },
+        { name: 'Adaptability', icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>` },
+        { name: 'Time Management', icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>` },
+        { name: 'Fast Learner', icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m13 2-2 2.5h3L12 7"/><path d="M10 14v-3"/><path d="M14 14v-3"/><path d="M11 19H6.93a2 2 0 0 1-1.8-1.1L3 14h18l-2.13 3.9A2 2 0 0 1 17.07 19H16"/><path d="M12 22v-3"/></svg>` },
+        { name: 'Critical Thinking', icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>` }
+    ]
+};
+
+function renderSkillsSection() {
+    const gridContainer = document.getElementById('skills-grid-container');
+    const profContainer = document.getElementById('professional-skills-container');
+    
+    if (!gridContainer || !profContainer) return;
+    
+    // Render Technical Skills Cards
+    gridContainer.innerHTML = skillsData.map((category) => {
+        const chipsHTML = category.skills.map(skill => `
+            <div class="skill-chip" data-stagger-child>
+                <span class="skill-chip-icon">${skill.icon}</span>
+                <span class="skill-chip-name">${skill.name}</span>
+            </div>
+        `).join('');
+        
+        return `
+            <div class="skill-category-block" data-stagger-parent>
+                <div class="card-border-sweep"></div>
+                <div class="skill-cat-header">
+                    <div class="skill-cat-icon-wrap">${category.icon}</div>
+                    <div class="skill-cat-header-info">
+                        <h3 class="skill-cat-title">${category.title}</h3>
+                        <p class="skill-cat-desc">${category.desc}</p>
+                    </div>
+                </div>
+                <hr class="skill-card-divider" />
+                <div class="skill-chips-grid">
+                    ${chipsHTML}
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Render Professional Skills Panel
+    const pillsHTML = professionalSkillsData.pills.map(pill => `
+        <span class="skill-pill" data-stagger-child>
+            ${pill.icon}
+            ${pill.name}
+        </span>
+    `).join('');
+    
+    profContainer.innerHTML = `
+        <div class="professional-skills-block" data-stagger-parent>
+            <div class="card-border-sweep"></div>
+            <div class="professional-skills-left">
+                <div class="professional-skills-icon-wrap">${professionalSkillsData.icon}</div>
+                <div class="professional-skills-info">
+                    <h3 class="professional-skills-title">${professionalSkillsData.title}</h3>
+                    <p class="professional-skills-desc">${professionalSkillsData.desc}</p>
+                </div>
+            </div>
+            <div class="professional-skills-right">
+                <div class="skill-pills-row">
+                    ${pillsHTML}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Mouse Follow Glow Effect
+function initSkillsMouseGlow() {
+    const blocks = document.querySelectorAll('.skill-category-block, .professional-skills-block');
+    blocks.forEach(block => {
+        block.addEventListener('mousemove', e => {
+            const rect = block.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            block.style.setProperty('--mouse-x', `${x}px`);
+            block.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+}
+
+// Dynamic Particle Generation
+function initSkillsParticles() {
+    const container = document.getElementById('skills-particles');
+    if (!container) return;
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = `particle particle-${i}`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.setProperty('--delay', `${Math.random() * 8}s`);
+        particle.style.setProperty('--duration', `${6 + Math.random() * 10}s`);
+        particle.style.setProperty('--x', `${-30 + Math.random() * 60}px`);
+        particle.style.setProperty('--y', `${-40 - Math.random() * 80}px`);
+        container.appendChild(particle);
+    }
+}
+
+// Initialize Skills section on DOM load
+renderSkillsSection();
+initSkillsMouseGlow();
+initSkillsParticles();
+
+// --- Skills Stagger Animation (chip-cards & pills) ---
+const skillStaggerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const parent = entry.target;
+            parent.classList.add('is-visible');
+
+            // Stagger each child chip/pill inside this category block
+            const children = parent.querySelectorAll('[data-stagger-child]');
+            children.forEach((child, i) => {
+                setTimeout(() => {
+                    child.classList.add('is-visible');
+                }, 80 + i * 55);
+            });
+
+            skillStaggerObserver.unobserve(parent);
+        }
+    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('[data-stagger-parent]').forEach(block => {
+    skillStaggerObserver.observe(block);
 });
 
 // Counter Animation Logic
@@ -216,21 +418,19 @@ function animateCounter(element, target) {
     }, 16);
 }
 
-// Ensure initial skill progress widths are read from inline styling during transition
-document.querySelectorAll('.skill-progress-bar .progress').forEach(progress => {
-    const targetWidth = progress.style.width;
-    progress.style.width = '0';
-    
-    const skillCard = progress.closest('.skills-category-card');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                progress.style.width = targetWidth;
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    observer.observe(skillCard);
+// Chip tilt on mousemove (subtle 3D feel)
+document.querySelectorAll('.skill-chip').forEach(chip => {
+    chip.addEventListener('mousemove', (e) => {
+        const rect = chip.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / (rect.width / 2);
+        const dy = (e.clientY - cy) / (rect.height / 2);
+        chip.style.transform = `translateY(-3px) scale(1.02) rotateX(${-dy * 6}deg) rotateY(${dx * 6}deg)`;
+    });
+    chip.addEventListener('mouseleave', () => {
+        chip.style.transform = '';
+    });
 });
 
 
@@ -344,3 +544,108 @@ function showToast(message) {
         }, 300);
     }, 2500);
 }
+
+// --- Experience Modal Logic ---
+const experienceData = {
+    'tarcin': {
+        company: 'Tarcin Robotics',
+        role: 'AI OPS Intern',
+        type: 'Internship',
+        period: 'September 2025 – May 2026',
+        summary: 'Worked at the intersection of AI, machine learning, and workflow automation — building intelligent systems and integrating machine learning models into production-level automation pipelines.',
+        responsibilities: [
+            'Developed AI-powered workflow automation solutions using n8n and internal tools, reducing manual intervention across key operational processes.',
+            'Applied machine learning techniques to classify, route, and process incoming data — combining model logic with LLM prompts for hybrid decision-making.',
+            'Built and integrated AI features into web applications and internal systems, including AI-assisted data review and real-time alert mechanisms.',
+            'Integrated REST APIs and webhook-driven automation workflows for seamless data processing and inter-system business operations.',
+            'Automated repetitive tasks through Python scripting, workflow orchestration, and multi-step system integrations.',
+            'Designed ML-assisted pipelines to pre-filter and validate data before passing it to AI/LLM nodes — improving accuracy and reducing token cost.',
+            'Collaborated with development teams to deploy, test, and optimize AI-enabled applications in staging and production environments.'
+        ],
+        impacts: [
+            'Reduced manual data processing time significantly by automating multi-step classification workflows.',
+            'Combined machine learning logic with LLM chains to achieve higher precision in automated decision flows.',
+            'Built reusable automation templates adopted across multiple internal departments.',
+            'Contributed to a production-level AI integration that handled real-time business data end-to-end.'
+        ],
+        techStack: ['n8n', 'Python', 'REST APIs', 'Webhooks', 'LLMs (Groq)', 'Machine Learning', 'AI Agents', 'Workflow Automation', 'JavaScript'],
+        certLink: 'https://drive.google.com/drive/folders/1g3HMKSUmVpMgJs49gTXD1t6Hlra0pCbO?usp=drive_link'
+    }
+};
+
+const expModal = document.getElementById('exp-modal');
+const expModalBody = document.getElementById('exp-modal-body');
+const expModalClose = document.getElementById('exp-modal-close');
+
+function openExpModal(id) {
+    const data = experienceData[id];
+    if (!data) return;
+
+    const respHTML = data.responsibilities.map(r => `<li>${r}</li>`).join('');
+    const impactHTML = data.impacts ? data.impacts.map(i => `<li>${i}</li>`).join('') : '';
+    const techHTML = data.techStack.map(t => `<span class="tag">${t}</span>`).join('');
+
+    expModalBody.innerHTML = `
+        <div class="modal-header-section">
+            <span class="modal-project-badge">${data.type} &nbsp;·&nbsp; ${data.period}</span>
+            <h3 class="modal-project-title">${data.role}</h3>
+            <div class="modal-sub-header">
+                <span class="modal-project-role">${data.company}</span>
+                ${data.certLink ? `
+                <a href="${data.certLink}" target="_blank" rel="noopener noreferrer" class="btn btn-card-demo" style="background-color: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.25); color: var(--accent-primary); box-shadow: none;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>View Certificate</span>
+                </a>` : ''}
+            </div>
+        </div>
+
+        ${data.summary ? `<div class="modal-body-section"><p>${data.summary}</p></div>` : ''}
+
+        <div class="modal-body-section">
+            <h4>Key Responsibilities</h4>
+            <ul class="modal-list">${respHTML}</ul>
+        </div>
+
+        ${impactHTML ? `
+        <div class="modal-body-section">
+            <h4>Impact &amp; Outcomes</h4>
+            <ul class="modal-list modal-impact-list">${impactHTML}</ul>
+        </div>` : ''}
+
+        <div class="modal-body-section">
+            <h4>Technologies Used</h4>
+            <div class="project-tags">${techHTML}</div>
+        </div>
+    `;
+
+    expModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeExpModal() {
+    expModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Wire up all exp cards
+document.querySelectorAll('.exp-card').forEach(card => {
+    card.addEventListener('click', () => openExpModal(card.getAttribute('data-exp')));
+    card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openExpModal(card.getAttribute('data-exp'));
+        }
+    });
+});
+
+if (expModalClose) expModalClose.addEventListener('click', closeExpModal);
+
+window.addEventListener('click', e => {
+    if (e.target === expModal) closeExpModal();
+});
+
+window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && expModal && expModal.classList.contains('active')) {
+        closeExpModal();
+    }
+});

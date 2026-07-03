@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.3">
 </head>
 <body>
     <!-- Grid Overlay -->
@@ -42,14 +42,14 @@
             <div class="hero-content">
                 <div class="badge">
                     <span class="pulse-dot"></span>
-                    Available for AI Ops & Automation Roles
+                    Available for Software Development & AI Roles
                 </div>
                 <h1 class="hero-title">
                     Building Intelligent <br>
-                    <span class="text-gradient">Workflows & AI Agents</span>
+                    <span class="text-gradient">Web Applications & AI Solutions</span>
                 </h1>
                 <p class="hero-subtitle">
-                    I'm an <strong>AI & Workflow Automation Engineer</strong>. I design autonomous systems, custom APIs, and backend pipelines that eliminate manual bottlenecks and scale operational productivity.
+                    I'm a <strong>Software Developer</strong> passionate about building modern web applications, AI-powered solutions, automation workflows, and scalable backend systems. I enjoy creating products that solve real-world problems through clean code and intelligent technologies.
                 </p>
                 <div class="hero-actions">
                     <a href="#projects" class="btn btn-primary">
@@ -107,134 +107,32 @@
 
     <!-- Skills Section -->
     <section id="skills" class="section skills-section">
+        <!-- Ambient Background Effects -->
+        <div class="skills-ambient-glow"></div>
+        <div class="skills-noise-overlay"></div>
+        <div class="skills-particles" id="skills-particles"></div>
+        <div class="skills-floating-lines">
+            <div class="floating-line line-1"></div>
+            <div class="floating-line line-2"></div>
+            <div class="floating-line line-3"></div>
+        </div>
+        <div class="skills-glow-blob blob-1"></div>
+        <div class="skills-glow-blob blob-2"></div>
+
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Technical Skillset</h2>
-                <p class="section-subtitle">A curated set of technologies and methodologies I use to construct reliable applications and automation flows.</p>
+                <p class="section-subtitle">Technologies and methodologies I use to build AI-powered solutions, modern web apps, and intelligent automation workflows.</p>
             </div>
 
-            <div class="skills-grid">
-                <!-- Languages & DB -->
-                <div class="skills-category-card glass-panel">
-                    <div class="category-header">
-                        <div class="category-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                        </div>
-                        <h3>Programming & DB</h3>
-                    </div>
-                    <ul class="skills-list">
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">Python</span>
-                                <span class="skill-level">Advanced</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 90%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">JavaScript</span>
-                                <span class="skill-level">Intermediate</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 75%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">React.js</span>
-                                <span class="skill-level">Intermediate</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 75%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">SQL</span>
-                                <span class="skill-level">Intermediate</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 80%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">MySQL</span>
-                                <span class="skill-level">Intermediate</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 75%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">HTML & CSS</span>
-                                <span class="skill-level">Experienced</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 85%;"></div></div>
-                        </li>
-                    </ul>
-                </div>
+            <!-- Categories Grid -->
+            <div class="skills-categories-grid" id="skills-grid-container">
+                 <!-- Injected dynamically by JS -->
+            </div>
 
-                <!-- Automation & Integrations -->
-                <div class="skills-category-card glass-panel">
-                    <div class="category-header">
-                        <div class="category-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-                        </div>
-                        <h3>Automation & Tools</h3>
-                    </div>
-                    <ul class="skills-list">
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">n8n</span>
-                                <span class="skill-level">Expert</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 95%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">Activepieces</span>
-                                <span class="skill-level">Expert</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 90%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">REST APIs / Webhooks</span>
-                                <span class="skill-level">Advanced</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 88%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">Git & Version Control</span>
-                                <span class="skill-level">Advanced</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 85%;"></div></div>
-                        </li>
-                        <li>
-                            <div class="skill-info">
-                                <span class="skill-name">Google Workspace API</span>
-                                <span class="skill-level">Advanced</span>
-                            </div>
-                            <div class="skill-progress-bar"><div class="progress" style="width: 80%;"></div></div>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Soft Skills & Workflow Ideology -->
-                <div class="skills-category-card glass-panel">
-                    <div class="category-header">
-                        <div class="category-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        </div>
-                        <h3>Professional Core</h3>
-                    </div>
-                    <div class="soft-skills-container">
-                        <span class="soft-skill-tag">Problem Solving</span>
-                        <span class="soft-skill-tag">Analytical Thinking</span>
-                        <span class="soft-skill-tag">Time Management</span>
-                        <span class="soft-skill-tag">Communication & Teamwork</span>
-                        <span class="soft-skill-tag">Adaptability</span>
-                        <span class="soft-skill-tag">Workflow Design</span>
-                        <span class="soft-skill-tag">AI Integration</span>
-                        <span class="soft-skill-tag">English (Fluent)</span>
-                        <span class="soft-skill-tag">Tamil (Native)</span>
-                    </div>
-                </div>
+            <!-- Professional Skills -->
+            <div class="professional-skills-section" id="professional-skills-container">
+                 <!-- Injected dynamically by JS -->
             </div>
         </div>
     </section>
@@ -244,51 +142,40 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Professional Experience</h2>
-                <p class="section-subtitle">Real-world experience deploying AI operations and system-level automation workflows.</p>
+                <p class="section-subtitle">Real-world experience building AI-powered solutions and automation workflows.</p>
             </div>
 
-            <div class="experience-timeline">
-                <div class="timeline-line"></div>
-                
+            <div class="exp-cards-grid">
                 <!-- Tarcin Robotics -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content glass-panel">
-                        <div class="timeline-meta">
-                             <span class="timeline-company">Tarcin Robotics</span>
-                             <span class="timeline-date">September 2025 – May 2026</span>
+                <div class="exp-card glass-panel" data-exp="tarcin" role="button" tabindex="0" aria-label="View Tarcin Robotics experience details">
+                    <div class="exp-card-left">
+                        <div class="exp-card-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                         </div>
-                        <h3 class="timeline-role">AI OPS Intern</h3>
-                        
-                        <p class="timeline-desc">
-                            Spearheaded automation scripting, workflow design, and operational data integration to streamline robotics deployment and general enterprise automation.
-                        </p>
-
-                        <div class="timeline-details-wrapper">
-                            <h4>Key Responsibilities:</h4>
-                            <ul class="timeline-responsibilities">
-                                <li>Created bespoke workflow automation solutions to streamline cross-departmental operations.</li>
-                                <li>Developed custom Python scripting for scheduled, repetitious tasks, saving hundreds of operational hours.</li>
-                                <li>Integrated webhooks and API triggers with custom logic for dynamic, real-time data handling.</li>
-                                <li>Assisted in designing automated system health monitors and process triggers.</li>
-                                <li>Collaborated directly with engineering and ops teams to identify and debug workflow logic bottlenecks.</li>
-                                <li>Contributed heavily to QA testing and deployment guidelines for production level automation scripts.</li>
-                            </ul>
-                            
-                            <div class="timeline-impact">
-                                <strong>Impact Metrics:</strong>
-                                <ul>
-                                    <li>Measurably reduced manual interventions across core operational loops.</li>
-                                    <li>Implemented real-time alerts enabling 5x faster team reactions to system exceptions.</li>
-                                    <li>Successfully transitioned legacy cron-jobs into scalable cloud-based workflow engines.</li>
-                                </ul>
-                            </div>
+                        <div class="exp-card-info">
+                            <span class="exp-card-company">Tarcin Robotics</span>
+                            <span class="exp-card-role">AI OPS Intern</span>
                         </div>
+                    </div>
+                    <div class="exp-card-right">
+                        <span class="exp-card-date">Sept 2025 – May 2026</span>
+                        <span class="exp-card-badge">Internship</span>
+                        <svg class="exp-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Experience Detail Modal -->
+    <div id="exp-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <button class="modal-close" id="exp-modal-close" aria-label="Close modal">&times;</button>
+            <div id="exp-modal-body">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- Projects Section -->
     <section id="projects" class="section projects-section">
@@ -299,6 +186,32 @@
             </div>
 
             <div class="projects-grid">
+                <!-- Project: AI Interviewer: Mock Screening Suite -->
+                <div class="project-card glass-panel">
+                    <div class="project-badge">React + FastAPI + Gemini</div>
+                    <div class="project-content">
+                        <h3 class="project-title">AI Interviewer: Mock Screening Suite</h3>
+                        <p class="project-description">
+                            An advanced, interactive mock screening application designed to simulate high-fidelity technical interviews using LLMs. It features a React frontend, FastAPI backend, dynamic OCR pipelines (Tesseract.js), and synchronized voice interaction.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">Gemini API</span>
+                            <span class="tag">Tesseract.js</span>
+                            <span class="tag">Web Speech API</span>
+                            <span class="tag">SQLAlchemy</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="btn btn-card-details" data-project="ai-interviewer">View Details & Impact</button>
+                            <a href="https://www.linkedin.com/posts/sarandeep-p-s-345b39261_artificialintelligence-ai-machinelearning-ugcPost-7473755964983115776-56uS/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEBrBaUBF_geEoLK1xjuInaLiF4y2mSY554" target="_blank" rel="noopener noreferrer" class="btn btn-card-demo">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                <span>Watch Demo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Project 1: Daily AI News Agent -->
                 <div class="project-card glass-panel">
                     <div class="project-badge">n8n + Groq AI + WhatsApp</div>
@@ -460,6 +373,16 @@
                     <h3>Certifications & Awards</h3>
                 </div>
                 <div class="certs-container">
+                    <!-- Tarcin Robotics Certificate -->
+                    <div class="cert-item">
+                        <div class="cert-info">
+                            <span class="cert-title">Tarcin Robotics Internship Certificate</span>
+                            <span class="cert-issuer">AI OPS Internship Completion</span>
+                        </div>
+                        <a href="https://drive.google.com/drive/folders/1g3HMKSUmVpMgJs49gTXD1t6Hlra0pCbO?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn-cert-link" title="View Internship Certificate (Google Drive)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
+                    </div>
                     <!-- Cert 1 -->
                     <div class="cert-item">
                         <div class="cert-info">

@@ -12,6 +12,25 @@ const toastContainer = document.getElementById('toast-container');
 
 // --- Project Data ---
 const projectsData = {
+    'persona-ai': {
+        title: 'PersonAI – Local LLM Telegram Agent',
+        badge: 'Python + Ollama + Telegram Bot API',
+        role: 'AI Engineer & Creator',
+        demoLink: 'https://github.com/sarandeep47/PersonAI',
+        desc: 'An agentic Telegram assistant powered by a local, self-hosted LLM (Llama 3.2 via Ollama) with structured tool-calling across 16 functions spanning email, calendar, tasks, reminders, and contact management — with deterministic safety layers and 450+ automated tests.',
+        responsibilities: [
+            'Engineered an agentic workflow in Python using Ollama (Llama 3.2 3B) for local, private execution without external API costs.',
+            'Implemented 16 tool-calling functions covering Gmail, Google Calendar, task tracking, reminders, and SQLite contact storage.',
+            'Developed deterministic fallback logic, input validation, and safety layers ensuring tool execution accuracy.',
+            'Created 450+ automated unit and integration tests achieving comprehensive codebase reliability.'
+        ],
+        impacts: [
+            'Delivered 100% offline, privacy-focused assistant capability with zero API subscription costs.',
+            'Achieved robust multi-tool orchestration across 16 function definitions with automated fallback handling.',
+            'Ensured production-grade reliability validated across 450+ unit and integration test scenarios.'
+        ],
+        techStack: ['Python', 'Ollama (Llama 3.2)', 'Telegram Bot API', 'SQLite', 'Gmail API', 'Google Calendar API', 'Pytest']
+    },
     'ai-interviewer': {
         title: 'AI Interviewer: Mock Screening Suite',
         badge: 'React + FastAPI + Gemini',
@@ -190,14 +209,14 @@ const animateOnScroll = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-            
+
             // If it's a progress bar, animate the progress width
             if (entry.target.classList.contains('skills-category-card')) {
                 const bars = entry.target.querySelectorAll('.skill-progress-bar .progress');
                 bars.forEach(bar => {
-                    const widthVal = bar.parentElement.previousElementSibling.querySelector('.skill-level').previousElementSibling ? 
-                                     bar.parentElement.previousElementSibling.querySelector('.skill-level').parentElement.nextSibling : null;
-                    bar.style.width = bar.style.width; 
+                    const widthVal = bar.parentElement.previousElementSibling.querySelector('.skill-level').previousElementSibling ?
+                        bar.parentElement.previousElementSibling.querySelector('.skill-level').parentElement.nextSibling : null;
+                    bar.style.width = bar.style.width;
                 });
             }
 
@@ -282,9 +301,9 @@ const professionalSkillsData = {
 function renderSkillsSection() {
     const gridContainer = document.getElementById('skills-grid-container');
     const profContainer = document.getElementById('professional-skills-container');
-    
+
     if (!gridContainer || !profContainer) return;
-    
+
     // Render Technical Skills Cards
     gridContainer.innerHTML = skillsData.map((category) => {
         const chipsHTML = category.skills.map(skill => `
@@ -293,7 +312,7 @@ function renderSkillsSection() {
                 <span class="skill-chip-name">${skill.name}</span>
             </div>
         `).join('');
-        
+
         return `
             <div class="skill-category-block" data-stagger-parent>
                 <div class="card-border-sweep"></div>
@@ -311,7 +330,7 @@ function renderSkillsSection() {
             </div>
         `;
     }).join('');
-    
+
     // Render Professional Skills Panel
     const pillsHTML = professionalSkillsData.pills.map(pill => `
         <span class="skill-pill" data-stagger-child>
@@ -319,7 +338,7 @@ function renderSkillsSection() {
             ${pill.name}
         </span>
     `).join('');
-    
+
     profContainer.innerHTML = `
         <div class="professional-skills-block" data-stagger-parent>
             <div class="card-border-sweep"></div>
@@ -404,7 +423,7 @@ function animateCounter(element, target) {
     let count = 0;
     const duration = 1200; // ms
     const speed = Math.ceil(target / (duration / 16)); // ~60fps
-    
+
     element.innerText = count;
 
     const timer = setInterval(() => {
@@ -439,17 +458,17 @@ document.querySelectorAll('.btn-card-details').forEach(btn => {
     btn.addEventListener('click', () => {
         const projId = btn.getAttribute('data-project');
         const data = projectsData[projId];
-        
+
         if (data) {
             // Compile Tech Stack HTML
             const techHTML = data.techStack.map(t => `<span class="tag">${t}</span>`).join('');
-            
+
             // Compile Responsibilities HTML
             const respHTML = data.responsibilities.map(r => `<li>${r}</li>`).join('');
-            
+
             // Compile Impacts HTML
             const impactHTML = data.impacts.map(i => `<li>${i}</li>`).join('');
-            
+
             // Inject to Modal body
             modalBodyContent.innerHTML = `
                 <div class="modal-header-section">
@@ -485,7 +504,7 @@ document.querySelectorAll('.btn-card-details').forEach(btn => {
                     <ul class="modal-list modal-impact-list">${impactHTML}</ul>
                 </div>
             `;
-            
+
             projectModal.classList.add('active');
             document.body.style.overflow = 'hidden'; // Lock background scroll
         }
